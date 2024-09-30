@@ -8,12 +8,10 @@ import java.util.TimerTask;
 
 public class CanvasCircle extends Canvas {
     
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
     private static ArrayList<Circle> circles = new ArrayList<>();
+    static boolean isQuadtreeVisible = false;
 
 	public CanvasCircle(){
         Timer timer = new Timer();
@@ -50,8 +48,11 @@ public class CanvasCircle extends Canvas {
     
     private Graphics drawOnTheGraphics(Graphics graphic){
         drawCircles(graphic);
-        /*Décommenter pour dessiner l'arbre quaternaire (QuadTree) */
-        //drawQuadtree(graphic, CirclePhysics.quadtree);
+
+        if(isQuadtreeVisible){
+            drawQuadtree(graphic, CirclePhysics.quadtree);
+        }  
+
         return graphic;
     }
 

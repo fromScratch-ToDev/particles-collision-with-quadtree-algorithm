@@ -1,4 +1,5 @@
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
  
@@ -20,14 +21,6 @@ public class App{
         jframe.setSize(WIDTH, HEIGHT);
         jframe.add(canvas);
         jframe.setVisible(true);
-
-        // Adding a window listener to close the application
-        jframe.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent) {
-                System.exit(0);
-            }
-        });
-        
     }
 
     private static void configureCanvas(){
@@ -41,6 +34,44 @@ public class App{
                 }
             }
         });
+
+        canvas.addMouseListener(new MouseAdapter() {
+            
+            @Override
+            public void mouseClicked(MouseEvent e){
+                new Circle(new Point(e.getX(), e.getY()));
+            }
+            
+        });
+
+        canvas.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyChar()) {
+                    case 'f':
+                        CanvasCircle.isQuadtreeVisible = !CanvasCircle.isQuadtreeVisible;
+                        break;
+
+                    case 'r':
+                        Circle.circles = new ArrayList<>();
+                        break;
+                
+                    case '+':
+                        Circle.setMass(Circle.mass *= 2);
+                        break;
+
+                    case '-':
+                        Circle.setMass(Circle.mass /= 2);
+                        if (Circle.mass <= 1) {
+                            Circle.setMass(1);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            } 
+        });            
     }
 
    

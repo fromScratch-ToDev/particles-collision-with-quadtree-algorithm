@@ -5,9 +5,8 @@ import java.util.Random;
 public class Circle {
     public static ArrayList<Circle> circles = new ArrayList<Circle>();
     private static double randomVelocity = 1; 
-    private static double randomMinMass = 20; 
-    private static double randomMaxMass = 40; 
-    public double radius, mass;
+    public double radius;
+    static public double mass = 20;
     private Vector2D velocity;
     private Point position;
     public Color color;
@@ -17,14 +16,20 @@ public class Circle {
     public Circle(Point position) {
         this.position = position;
         this.velocity = new Vector2D(random.nextDouble(- Circle.randomVelocity, Circle.randomVelocity), random.nextDouble(- Circle.randomVelocity,Circle.randomVelocity));
-        this.mass = random.nextDouble(Circle.randomMinMass, Circle.randomMaxMass);
         this.radius = Math.sqrt(mass);
         this.color = new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
         Circle.circles.add(this);
     }
     
     public static double getMaxRadius(){
-        return Math.sqrt(Circle.randomMaxMass);
+        return Math.sqrt(Circle.mass);
+    }
+
+    public static void setMass(double mass){
+        Circle.mass = mass;
+        for (Circle circle : Circle.circles) {
+            circle.radius = Math.sqrt(mass);
+        }
     }
     
     public Point getPosition(){
